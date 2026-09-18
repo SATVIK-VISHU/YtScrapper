@@ -24,18 +24,6 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Load the embedding model before accepting traffic.
-
-    Without this the model loads lazily on the first question, so the first
-    student to use it waits ~14 seconds staring at a spinner while every
-    subsequent search takes one. Better to spend that time at startup, in the
-    terminal, where a wait is expected and explained.
-    """
-    from ytrag.embed import get_embedder
-
-    print("Loading embedding model (first run downloads it)...", flush=True)
-    embedder = get_embedder()
-    print(f"Ready: {embedder.name} ({embedder.dim}-dim)", flush=True)
     yield
 
 
